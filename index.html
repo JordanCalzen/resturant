@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Cafe Restaurant</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="color-scheme" content="light dark" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+		<style>
+			:root {
+				--primary-orange: #ff7a45;
+				--primary-red: #e63946;
+				--accent-yellow: #ffb347;
+				--accent-pink: #ff6b8b;
+				--accent-green: #2a9d8f;
+				--warm-cream: #fff9f0;
+				--soft-beige: #f5f1eb;
+				--light-gray: #faf9f7;
+				--dark-chocolate: #2d2424;
+			}
+
+			.gradient-bg {
+				background: linear-gradient(
+					135deg,
+					var(--warm-cream) 0%,
+					var(--soft-beige) 100%
+				);
+			}
+
+			.gradient-text {
+				background: linear-gradient(
+					90deg,
+					var(--primary-orange) 0%,
+					var(--primary-red) 100%
+				);
+				-webkit-background-clip: text;
+				background-clip: text;
+				color: transparent;
+			}
+
+			.gradient-button {
+				background: linear-gradient(
+					90deg,
+					var(--primary-orange) 0%,
+					var(--primary-red) 100%
+				);
+				transition: all 0.3s ease;
+			}
+
+			.gradient-button:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 10px 20px rgba(255, 122, 69, 0.3);
+			}
+
+			.dish-card:hover {
+				transform: translateY(-8px);
+				box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+			}
+
+			.menu-chip.active {
+				background: linear-gradient(
+					90deg,
+					var(--primary-orange) 0%,
+					var(--primary-red) 100%
+				);
+				color: white;
+				border-color: transparent;
+			}
+
+			.category-tag {
+				background: var(--warm-cream);
+				border: 1px solid rgba(255, 122, 69, 0.2);
+			}
+		</style>
+	</head>
+	<body
+		class="antialiased gradient-bg text-gray-800 selection:bg-orange-100 selection:text-gray-900"
+	>
+		<!-- NAV -->
+		<header
+			class="sticky top-0 z-50 backdrop-blur border-b border-orange-100 shadow-sm"
+		>
+			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div class="flex items-center justify-between h-16">
+					<a href="#" class="flex items-center group">
+						<!-- Logo Image Only -->
+						<img
+							src="images/logo-removebg-preview.png"
+							alt="Cafe Restaurant Logo"
+							class="h-12 w-auto"
+						/>
+					</a>
+
+					<nav class="hidden md:flex items-center gap-8">
+						<a
+							href="#menu"
+							class="text-sm font-medium text-gray-600 hover:text-orange-600 transition-colors"
+							>Menu</a
+						>
+						<a
+							href="#reservations"
+							class="text-sm font-medium text-gray-600 hover:text-orange-600 transition-colors"
+							>Reservations</a
+						>
+						<a
+							href="#location"
+							class="text-sm font-medium text-gray-600 hover:text-orange-600 transition-colors"
+							>Location</a
+						>
+						<a
+							href="#about"
+							class="text-sm font-medium text-gray-600 hover:text-orange-600 transition-colors"
+							>About</a
+						>
+					</nav>
+
+					<div class="hidden md:flex items-center gap-3">
+						<a
+							href="tel:+1234567890"
+							class="inline-flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-orange-600 transition-colors"
+						>
+							<iconify-icon
+								icon="lucide:phone"
+								stroke-width="1.5"
+								class="text-base"
+							></iconify-icon>
+							<span>(123) 456-7890</span>
+						</a>
+						<a
+							href="#reservations"
+							class="inline-flex items-center gap-2 rounded-md gradient-button text-white hover:shadow-lg px-4 py-2 text-sm font-semibold tracking-tight transition-all"
+							style="letter-spacing: -0.01em"
+						>
+							<iconify-icon
+								icon="lucide:calendar"
+								stroke-width="1.5"
+								class="text-base"
+							></iconify-icon>
+							Reserve
+						</a>
+					</div>
+
+					<button
+						id="mobileMenuBtn"
+						class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-md border border-orange-200 bg-white hover:bg-orange-50 transition-colors"
+						aria-label="Open Menu"
+					>
+						<iconify-icon
+							icon="lucide:menu"
+							stroke-width="1.5"
+							class="text-lg text-gray-700"
+						></iconify-icon>
+					</button>
+				</div>
+			</div>
+
+			<!-- Mobile Menu -->
+			<div
+				id="mobileMenu"
+				class="md:hidden hidden border-t border-orange-100 bg-white shadow-lg"
+			>
+				<div class="px-4 py-4 space-y-2">
+					<a
+						href="#menu"
+						class="block text-sm font-medium text-gray-700 hover:text-orange-600 py-2"
+						>Menu</a
+					>
+					<a
+						href="#reservations"
+						class="block text-sm font-medium text-gray-700 hover:text-orange-600 py-2"
+						>Reservations</a
+					>
+					<a
+						href="#location"
+						class="block text-sm font-medium text-gray-700 hover:text-orange-600 py-2"
+						>Location</a
+					>
+					<a
+						href="#about"
+						class="block text-sm font-medium text-gray-700 hover:text-orange-600 py-2"
+						>About</a
+					>
+					<a
+						href="#reservations"
+						class="inline-flex items-center gap-2 rounded-md gradient-button text-white px-4 py-2 text-sm font-semibold tracking-tight w-full justify-center"
+						style="letter-spacing: -0.01em"
+					>
+						<iconify-icon
+							icon="lucide:calendar"
+							stroke-width="1.5"
+							class="text-base"
+						></iconify-icon>
+						Reserve
+					</a>
+				</div>
+			</div>
+		</header>
+
+		<!-- HERO -->
+		<section class="-mt-20 pt-20 relative overflow-hidden">
+			<div class="absolute inset-0 pointer-events-none">
+				<div
+					class="absolute -top-24 left-1/2 -translate-x-1/2 h-64 w-[80%] rounded-full blur-3xl opacity-30 bg-gradient-to-r from-orange-200 via-pink-200 to-yellow-200"
+				></div>
+			</div>
+
+			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div class="grid lg:grid-cols-2 gap-12 items-center py-16 lg:py-24">
+					<div class="space-y-6">
+						<p
+							class="text-sm font-semibold text-orange-600 uppercase tracking-wide"
+						>
+							Seasonal tasting & wood-fired plates
+						</p>
+						<h1
+							class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900"
+							style="
+								font-family: 'Plus Jakarta Sans', Inter, ui-sans-serif,
+									system-ui;
+								letter-spacing: -0.03em;
+							"
+						>
+							Ingredient-first dining,<br />
+							<span class="gradient-text">crafted over flame</span>
+						</h1>
+						<p class="text-base text-gray-600 max-w-prose leading-relaxed">
+							A modern kitchen celebrating local produce, sustainable seafood,
+							and live-fire techniques. Reserve a seat at the chef's counter or
+							unwind in our dining room.
+						</p>
+						<div class="flex flex-col sm:flex-row gap-3">
+							<a
+								href="#reservations"
+								class="inline-flex items-center gap-2 rounded-md gradient-button text-white hover:shadow-lg px-6 py-3 text-sm font-semibold tracking-tight w-full sm:w-auto justify-center transition-all"
+								style="letter-spacing: -0.01em"
+							>
+								Reserve a table
+								<iconify-icon
+									icon="lucide:arrow-right"
+									stroke-width="1.5"
+									class="text-base"
+								></iconify-icon>
+							</a>
+							<a
+								href="#menu"
+								class="inline-flex items-center gap-2 rounded-md border-2 border-orange-200 bg-white text-gray-800 hover:bg-orange-50 px-6 py-3 text-sm font-semibold tracking-tight w-full sm:w-auto justify-center transition-colors"
+								style="letter-spacing: -0.01em"
+							>
+								Explore menu
+								<iconify-icon
+									icon="lucide:utensils-crossed"
+									stroke-width="1.5"
+									class="text-base"
+								></iconify-icon>
+							</a>
+						</div>
+
+						<div class="flex items-center gap-6 pt-4">
+							<div class="flex items-center gap-2 text-gray-700">
+								<iconify-icon
+									icon="lucide:star"
+									stroke-width="1.5"
+									class="text-base text-yellow-500"
+								></iconify-icon>
+								<span class="text-sm font-bold">4.8 / 5</span>
+								<span class="text-xs text-gray-500">• 1.2k reviews</span>
+							</div>
+							<div class="flex items-center gap-2 text-emerald-600">
+								<iconify-icon
+									icon="lucide:leaf"
+									stroke-width="1.5"
+									class="text-base"
+								></iconify-icon>
+								<span class="text-xs font-medium"
+									>Vegetarian & gluten-free options</span
+								>
+							</div>
+						</div>
+					</div>
+
+					<div class="relative">
+						<div
+							class="aspect-[4/3] rounded-2xl overflow-hidden ring-4 ring-white shadow-2xl bg-white"
+						>
+							<img
+								src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1974&auto=format&fit=crop"
+								alt="Plated seasonal dish"
+								class="h-full w-full object-cover"
+							/>
+						</div>
+						<div class="absolute -bottom-6 -left-6 hidden sm:block">
+							<div
+								class="rounded-xl border-2 border-orange-100 bg-white/90 backdrop-blur px-4 py-3 shadow-xl"
+							>
+								<div class="flex items-center gap-3">
+									<div
+										class="h-10 w-10 rounded-md overflow-hidden ring-2 ring-orange-200"
+									>
+										<img
+											src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?q=80&w=2070&auto=format&fit=crop"
+											alt="Chef"
+											class="h-full w-full object-cover"
+										/>
+									</div>
+									<div>
+										<p class="text-xs text-orange-600 font-semibold">
+											Chef's Tasting
+										</p>
+										<p class="text-sm font-bold text-gray-900">
+											7 courses • $95
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- FEATURED DISHES -->
+		<section id="featured" class="py-12 lg:py-16">
+			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div class="flex items-end justify-between mb-8">
+					<div>
+						<h2
+							class="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900"
+							style="
+								font-family: 'Plus Jakarta Sans', Inter, ui-sans-serif,
+									system-ui;
+								letter-spacing: -0.02em;
+							"
+						>
+							Featured plates
+						</h2>
+						<p class="text-sm text-gray-600 mt-2">
+							Seasonal signatures from our wood-fired grill.
+						</p>
+					</div>
+					<a
+						href="#menu"
+						class="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-orange-600 hover:text-orange-700"
+					>
+						View full menu
+						<iconify-icon
+							icon="lucide:arrow-right"
+							stroke-width="1.5"
+							class="text-base"
+						></iconify-icon>
+					</a>
+				</div>
+
+				<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+					<!-- Card 1 -->
+					<article
+						class="group rounded-2xl overflow-hidden bg-white border-2 border-orange-50 shadow-md hover:shadow-xl dish-card transition-all duration-300"
+					>
+						<div class="aspect-[4/3] overflow-hidden">
+							<img
+								src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=2069&auto=format&fit=crop"
+								alt="Heirloom carrots with tahini"
+								class="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500"
+							/>
+							<!-- <div class="absolute top-3 left-3">
+								<span
+									class="text-xs px-3 py-1 rounded-full bg-white/90 backdrop-blur text-emerald-700 font-medium border border-emerald-100"
+									>Vegetarian</span
+								>
+							</div> -->
+						</div>
+						<div class="p-5">
+							<h3
+								class="text-lg font-bold tracking-tight text-gray-900"
+								style="letter-spacing: -0.01em"
+							>
+								Heirloom carrots, smoked tahini
+							</h3>
+							<p class="text-sm text-gray-600 mt-1">
+								Citrus, sesame brittle, dill oil
+							</p>
+							<div class="mt-4 flex items-center justify-between">
+								<span class="text-lg font-bold text-orange-600">$14</span>
+								<button
+									class="inline-flex items-center gap-2 text-sm font-semibold text-orange-600 hover:text-orange-700"
+								>
+									Add to order
+									<iconify-icon
+										icon="lucide:plus-circle"
+										stroke-width="1.5"
+										class="text-base"
+									></iconify-icon>
+								</button>
+							</div>
+						</div>
+					</article>
+
+					<!-- Card 2 -->
+					<article
+						class="group rounded-2xl overflow-hidden bg-white border-2 border-orange-50 shadow-md hover:shadow-xl dish-card transition-all duration-300"
+					>
+						<div class="aspect-[4/3] overflow-hidden">
+							<img
+								src="https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?q=80&w=2080&auto=format&fit=crop"
+								alt="Charred octopus with romesco"
+								class="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500"
+							/>
+							<!-- <div class="absolute top-3 left-3">
+								<span
+									class="text-xs px-3 py-1 rounded-full bg-white/90 backdrop-blur text-pink-600 font-medium border border-pink-100"
+									>Signature</span
+								>
+							</div> -->
+						</div>
+						<div class="p-5">
+							<h3
+								class="text-lg font-bold tracking-tight text-gray-900"
+								style="letter-spacing: -0.01em"
+							>
+								Charred octopus, romesco
+							</h3>
+							<p class="text-sm text-gray-600 mt-1">
+								Crispy potato, smoked paprika
+							</p>
+							<div class="mt-4 flex items-center justify-between">
+								<span class="text-lg font-bold text-orange-600">$22</span>
+								<button
+									class="inline-flex items-center gap-2 text-sm font-semibold text-orange-600 hover:text-orange-700"
+								>
+									Add to order
+									<iconify-icon
+										icon="lucide:plus-circle"
+										stroke-width="1.5"
+										class="text-base"
+									></iconify-icon>
+								</button>
+							</div>
+						</div>
+					</article>
+
+					<!-- Card 3 -->
+					<article
+						class="group rounded-2xl overflow-hidden bg-white border-2 border-orange-50 shadow-md hover:shadow-xl dish-card transition-all duration-300"
+					>
+						<div class="aspect-[4/3] overflow-hidden">
+							<img
+								src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=2070&auto=format&fit=crop"
+								alt="Dry-aged ribeye with herb butter"
+								class="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500"
+							/>
+							<!-- <div class="absolute top-3 left-3">
+								<span
+									class="text-xs px-3 py-1 rounded-full bg-white/90 backdrop-blur text-red-600 font-medium border border-red-100"
+									>Wood-fired</span
+								>
+							</div> -->
+						</div>
+						<div class="p-5">
+							<h3
+								class="text-lg font-bold tracking-tight text-gray-900"
+								style="letter-spacing: -0.01em"
+							>
+								Dry-aged ribeye, herb butter
+							</h3>
+							<p class="text-sm text-gray-600 mt-1">Charred lemon, thyme jus</p>
+							<div class="mt-4 flex items-center justify-between">
+								<span class="text-lg font-bold text-orange-600">$38</span>
+								<button
+									class="inline-flex items-center gap-2 text-sm font-semibold text-orange-600 hover:text-orange-700"
+								>
+									Add to order
+									<iconify-icon
+										icon="lucide:plus-circle"
+										stroke-width="1.5"
+										class="text-base"
+									></iconify-icon>
+								</button>
+							</div>
+						</div>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<!-- MENU -->
+		<section id="menu" class="py-12 lg:py-16 border-t border-orange-100">
+			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div class="flex items-end justify-between gap-4 mb-6">
+					<div>
+						<h2
+							class="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900"
+							style="
+								font-family: 'Plus Jakarta Sans', Inter, ui-sans-serif,
+									system-ui;
+								letter-spacing: -0.02em;
+							"
+						>
+							Our Menu
+						</h2>
+						<p class="text-sm text-gray-600 mt-2">
+							Select a category to filter.
+						</p>
+					</div>
+					<div class="hidden md:flex items-center gap-3 text-xs font-medium">
+						<div class="flex items-center gap-1 text-emerald-600">
+							<span
+								class="inline-block h-2 w-2 rounded-full bg-emerald-500"
+							></span>
+							<span>Seasonal</span>
+						</div>
+						<div class="flex items-center gap-1 text-blue-600">
+							<span
+								class="inline-block h-2 w-2 rounded-full bg-blue-500"
+							></span>
+							<span>Seafood</span>
+						</div>
+						<div class="flex items-center gap-1 text-red-600">
+							<span class="inline-block h-2 w-2 rounded-full bg-red-500"></span>
+							<span>Spicy</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Categories -->
+				<div class="relative">
+					<div
+						class="flex gap-2 overflow-x-auto scrollbar-none pb-2"
+						style="-ms-overflow-style: none; scrollbar-width: none"
+					>
+						<button
+							data-filter="all"
+							class="menu-chip active inline-flex items-center gap-2 whitespace-nowrap rounded-full border-2 border-transparent bg-gradient-to-r from-orange-500 to-red-500 px-5 py-2.5 text-sm font-semibold text-white hover:shadow-md transition-all"
+						>
+							<iconify-icon
+								icon="lucide:infinity"
+								stroke-width="1.5"
+								class="text-base"
+							></iconify-icon>
+							All
+						</button>
+						<button
+							data-filter="starters"
+							class="menu-chip inline-flex items-center gap-2 whitespace-nowrap rounded-full border-2 border-orange-200 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 hover:bg-orange-50 transition-all"
+						>
+							<iconify-icon
+								icon="lucide:sparkles"
+								stroke-width="1.5"
+								class="text-base text-yellow-500"
+							></iconify-icon>
+							Starters
+						</button>
+						<button
+							data-filter="mains"
+							class="menu-chip inline-flex items-center gap-2 whitespace-nowrap rounded-full border-2 border-orange-200 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 hover:bg-orange-50 transition-all"
+						>
+							<iconify-icon
+								icon="lucide:flame"
+								stroke-width="1.5"
+								class="text-base text-red-500"
+							></iconify-icon>
+							Mains
+						</button>
+						<button
+							data-filter="seafood"
+							class="menu-chip inline-flex items-center gap-2 whitespace-nowrap rounded-full border-2 border-orange-200 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 hover:bg-orange-50 transition-all"
+						>
+							<iconify-icon
+								icon="lucide:fish"
+								stroke-width="1.5"
+								class="text-base text-blue-500"
+							></iconify-icon>
+							Seafood
+						</button>
+						<button
+							data-filter="veg"
+							class="menu-chip inline-flex items-center gap-2 whitespace-nowrap rounded-full border-2 border-orange-200 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 hover:bg-orange-50 transition-all"
+						>
+							<iconify-icon
+								icon="lucide:leaf"
+								stroke-width="1.5"
+								class="text-base text-emerald-500"
+							></iconify-icon>
+							Vegetarian
+						</button>
+						<button
+							data-filter="dessert"
+							class="menu-chip inline-flex items-center gap-2 whitespace-nowrap rounded-full border-2 border-orange-200 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 hover:bg-orange-50 transition-all"
+						>
+							<iconify-icon
+								icon="lucide:cupcake"
+								stroke-width="1.5"
+								class="text-base text-pink-500"
+							></iconify-icon>
+							Dessert
+						</button>
+						<button
+							data-filter="drinks"
+							class="menu-chip inline-flex items-center gap-2 whitespace-nowrap rounded-full border-2 border-orange-200 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 hover:bg-orange-50 transition-all"
+						>
+							<iconify-icon
+								icon="lucide:wine"
+								stroke-width="1.5"
+								class="text-base text-purple-500"
+							></iconify-icon>
+							Drinks
+						</button>
+					</div>
+				</div>
+
+				<!-- Menu grid -->
+				<div
+					id="menuGrid"
+					class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+				>
+					<!-- Item -->
+					<div
+						class="menu-item rounded-xl border-2 border-orange-50 bg-white p-5 hover:shadow-lg transition-all"
+						data-category="starters veg"
+					>
+						<div class="flex items-start justify-between gap-4">
+							<div class="flex-1">
+								<div class="flex items-start justify-between">
+									<h3
+										class="text-lg font-bold tracking-tight text-gray-900"
+										style="letter-spacing: -0.01em"
+									>
+										Citrus beets, goat cheese
+									</h3>
+									<span class="text-lg font-bold text-orange-600">$12</span>
+								</div>
+								<p class="text-sm text-gray-600 mt-1">
+									Pistachio, mint, orange
+								</p>
+								<div class="flex items-center gap-2 mt-3">
+									<span
+										class="category-tag inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full text-emerald-700 font-medium"
+									>
+										<span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+										Seasonal
+									</span>
+									<span
+										class="category-tag inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full text-emerald-700 font-medium"
+									>
+										<iconify-icon
+											icon="lucide:leaf"
+											stroke-width="1.5"
+											class="text-sm"
+										></iconify-icon>
+										Vegetarian
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- More menu items follow same pattern -->
+					<div
+						class="menu-item rounded-xl border-2 border-orange-50 bg-white p-5 hover:shadow-lg transition-all"
+						data-category="starters seafood"
+					>
+						<div class="flex items-start justify-between gap-4">
+							<div class="flex-1">
+								<div class="flex items-start justify-between">
+									<h3
+										class="text-lg font-bold tracking-tight text-gray-900"
+										style="letter-spacing: -0.01em"
+									>
+										Hamachi crudo
+									</h3>
+									<span class="text-lg font-bold text-orange-600">$18</span>
+								</div>
+								<p class="text-sm text-gray-600 mt-1">
+									Yuzu kosho, radish, sesame
+								</p>
+								<div class="flex items-center gap-2 mt-3">
+									<span
+										class="category-tag inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full text-blue-700 font-medium"
+									>
+										<span class="h-2 w-2 rounded-full bg-blue-500"></span>
+										Seafood
+									</span>
+									<span
+										class="category-tag inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full text-red-700 font-medium"
+									>
+										<span class="h-2 w-2 rounded-full bg-red-500"></span>
+										Spicy
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div
+						class="menu-item rounded-xl border-2 border-orange-50 bg-white p-5 hover:shadow-lg transition-all"
+						data-category="mains seafood"
+					>
+						<div class="flex items-start justify-between gap-4">
+							<div class="flex-1">
+								<div class="flex items-start justify-between">
+									<h3
+										class="text-lg font-bold tracking-tight text-gray-900"
+										style="letter-spacing: -0.01em"
+									>
+										Roasted halibut
+									</h3>
+									<span class="text-lg font-bold text-orange-600">$29</span>
+								</div>
+								<p class="text-sm text-gray-600 mt-1">
+									Fennel, olive, lemon beurre blanc
+								</p>
+								<div class="flex items-center gap-2 mt-3">
+									<span
+										class="category-tag inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full text-blue-700 font-medium"
+									>
+										<span class="h-2 w-2 rounded-full bg-blue-500"></span>
+										Seafood
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div
+						class="menu-item rounded-xl border-2 border-orange-50 bg-white p-5 hover:shadow-lg transition-all"
+						data-category="mains"
+					>
+						<div class="flex items-start justify-between gap-4">
+							<div class="flex-1">
+								<div class="flex items-start justify-between">
+									<h3
+										class="text-lg font-bold tracking-tight text-gray-900"
+										style="letter-spacing: -0.01em"
+									>
+										Lamb shoulder
+									</h3>
+									<span class="text-lg font-bold text-orange-600">$31</span>
+								</div>
+								<p class="text-sm text-gray-600 mt-1">
+									Smoked garlic, rosemary jus
+								</p>
+								<div class="flex items-center gap-2 mt-3">
+									<span
+										class="category-tag inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full text-red-700 font-medium"
+									>
+										<span class="h-2 w-2 rounded-full bg-red-500"></span>
+										Spicy
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div
+						class="menu-item rounded-xl border-2 border-orange-50 bg-white p-5 hover:shadow-lg transition-all"
+						data-category="mains veg"
+					>
+						<div class="flex items-start justify-between gap-4">
+							<div class="flex-1">
+								<div class="flex items-start justify-between">
+									<h3
+										class="text-lg font-bold tracking-tight text-gray-900"
+										style="letter-spacing: -0.01em"
+									>
+										Wild mushroom risotto
+									</h3>
+									<span class="text-lg font-bold text-orange-600">$24</span>
+								</div>
+								<p class="text-sm text-gray-600 mt-1">Parmesan, chive oil</p>
+								<div class="flex items-center gap-2 mt-3">
+									<span
+										class="category-tag inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full text-emerald-700 font-medium"
+									>
+										<iconify-icon
+											icon="lucide:leaf"
+											stroke-width="1.5"
+											class="text-sm"
+										></iconify-icon>
+										Vegetarian
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div
+						class="menu-item rounded-xl border-2 border-orange-50 bg-white p-5 hover:shadow-lg transition-all"
+						data-category="dessert"
+					>
+						<div class="flex items-start justify-between gap-4">
+							<div class="flex-1">
+								<div class="flex items-start justify-between">
+									<h3
+										class="text-lg font-bold tracking-tight text-gray-900"
+										style="letter-spacing: -0.01em"
+									>
+										Olive oil cake
+									</h3>
+									<span class="text-lg font-bold text-orange-600">$10</span>
+								</div>
+								<p class="text-sm text-gray-600 mt-1">
+									Macerated berries, crème fraîche
+								</p>
+							</div>
+						</div>
+					</div>
+
+					<div
+						class="menu-item rounded-xl border-2 border-orange-50 bg-white p-5 hover:shadow-lg transition-all"
+						data-category="drinks"
+					>
+						<div class="flex items-start justify-between gap-4">
+							<div class="flex-1">
+								<div class="flex items-start justify-between">
+									<h3
+										class="text-lg font-bold tracking-tight text-gray-900"
+										style="letter-spacing: -0.01em"
+									>
+										Smoked negroni
+									</h3>
+									<span class="text-lg font-bold text-orange-600">$13</span>
+								</div>
+								<p class="text-sm text-gray-600 mt-1">Gin, amaro, vermouth</p>
+							</div>
+						</div>
+					</div>
+
+					<div
+						class="menu-item rounded-xl border-2 border-orange-50 bg-white p-5 hover:shadow-lg transition-all"
+						data-category="drinks"
+					>
+						<div class="flex items-start justify-between gap-4">
+							<div class="flex-1">
+								<div class="flex items-start justify-between">
+									<h3
+										class="text-lg font-bold tracking-tight text-gray-900"
+										style="letter-spacing: -0.01em"
+									>
+										Zero-proof spritz
+									</h3>
+									<span class="text-lg font-bold text-orange-600">$8</span>
+								</div>
+								<p class="text-sm text-gray-600 mt-1">Citrus, bitters, soda</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- RESERVATIONS -->
+		<section id="reservations" class="py-12 lg:py-16">
+			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div class="grid lg:grid-cols-2 gap-10">
+					<div>
+						<h2
+							class="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900"
+							style="
+								font-family: 'Plus Jakarta Sans', Inter, ui-sans-serif,
+									system-ui;
+								letter-spacing: -0.02em;
+							"
+						>
+							Reservations
+						</h2>
+						<p class="text-sm text-gray-600 mt-2 max-w-prose">
+							Book online for parties up to 6. For larger groups, private
+							dining, or the chef's counter, give us a call.
+						</p>
+
+						<div class="mt-6 space-y-3 text-sm text-gray-700">
+							<div class="flex items-center gap-2">
+								<iconify-icon
+									icon="lucide:clock"
+									stroke-width="1.5"
+									class="text-base text-orange-500"
+								></iconify-icon>
+								<span>Mon–Thu 5–10, Fri–Sat 5–11, Sun 5–9</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<iconify-icon
+									icon="lucide:phone"
+									stroke-width="1.5"
+									class="text-base text-orange-500"
+								></iconify-icon>
+								<a
+									href="tel:+1234567890"
+									class="hover:text-orange-600 font-medium"
+									>(123) 456-7890</a
+								>
+							</div>
+							<div class="flex items-center gap-2">
+								<iconify-icon
+									icon="lucide:mail"
+									stroke-width="1.5"
+									class="text-base text-orange-500"
+								></iconify-icon>
+								<a
+									href="mailto:hello@loma.example"
+									class="hover:text-orange-600 font-medium"
+									>hello@loma.example</a
+								>
+							</div>
+						</div>
+					</div>
+
+					<div
+						class="rounded-2xl border-2 border-orange-100 bg-white p-6 shadow-lg"
+					>
+						<form id="resForm" class="space-y-4">
+							<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+								<div>
+									<label
+										for="date"
+										class="block text-xs font-medium text-gray-700 mb-2"
+										>Date</label
+									>
+									<div class="relative">
+										<iconify-icon
+											icon="lucide:calendar"
+											stroke-width="1.5"
+											class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-orange-500 text-base"
+										></iconify-icon>
+										<input
+											id="date"
+											type="date"
+											required
+											class="w-full rounded-lg border-2 border-orange-100 bg-orange-50/50 pl-10 pr-3 py-2.5 text-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:border-orange-300 focus:ring-2 focus:ring-orange-100"
+										/>
+									</div>
+								</div>
+								<div>
+									<label
+										for="time"
+										class="block text-xs font-medium text-gray-700 mb-2"
+										>Time</label
+									>
+									<div class="relative">
+										<iconify-icon
+											icon="lucide:clock"
+											stroke-width="1.5"
+											class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-orange-500 text-base"
+										></iconify-icon>
+										<select
+											id="time"
+											required
+											class="appearance-none w-full rounded-lg border-2 border-orange-100 bg-orange-50/50 pl-10 pr-10 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-orange-300 focus:ring-2 focus:ring-orange-100"
+										>
+											<option value="17:00">5:00 PM</option>
+											<option value="17:30">5:30 PM</option>
+											<option value="18:00">6:00 PM</option>
+											<option value="18:30">6:30 PM</option>
+											<option value="19:00">7:00 PM</option>
+											<option value="19:30">7:30 PM</option>
+											<option value="20:00">8:00 PM</option>
+										</select>
+										<iconify-icon
+											icon="lucide:chevron-down"
+											stroke-width="1.5"
+											class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-orange-500 text-base"
+										></iconify-icon>
+									</div>
+								</div>
+								<div>
+									<label
+										for="guests"
+										class="block text-xs font-medium text-gray-700 mb-2"
+										>Guests</label
+									>
+									<div class="relative">
+										<iconify-icon
+											icon="lucide:users"
+											stroke-width="1.5"
+											class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-orange-500 text-base"
+										></iconify-icon>
+										<select
+											id="guests"
+											required
+											class="appearance-none w-full rounded-lg border-2 border-orange-100 bg-orange-50/50 pl-10 pr-10 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-orange-300 focus:ring-2 focus:ring-orange-100"
+										>
+											<option>1</option>
+											<option>2</option>
+											<option>3</option>
+											<option>4</option>
+											<option>5</option>
+											<option>6</option>
+										</select>
+										<iconify-icon
+											icon="lucide:chevron-down"
+											stroke-width="1.5"
+											class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-orange-500 text-base"
+										></iconify-icon>
+									</div>
+								</div>
+							</div>
+
+							<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+								<div>
+									<label
+										for="name"
+										class="block text-xs font-medium text-gray-700 mb-2"
+										>Name</label
+									>
+									<input
+										id="name"
+										type="text"
+										required
+										placeholder="Full name"
+										class="w-full rounded-lg border-2 border-orange-100 bg-orange-50/50 px-4 py-2.5 text-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:border-orange-300 focus:ring-2 focus:ring-orange-100"
+									/>
+								</div>
+								<div>
+									<label
+										for="phone"
+										class="block text-xs font-medium text-gray-700 mb-2"
+										>Phone</label
+									>
+									<input
+										id="phone"
+										type="tel"
+										required
+										placeholder="(123) 456-7890"
+										class="w-full rounded-lg border-2 border-orange-100 bg-orange-50/50 px-4 py-2.5 text-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:border-orange-300 focus:ring-2 focus:ring-orange-100"
+									/>
+								</div>
+							</div>
+
+							<div>
+								<label
+									for="email"
+									class="block text-xs font-medium text-gray-700 mb-2"
+									>Email</label
+								>
+								<input
+									id="email"
+									type="email"
+									required
+									placeholder="you@example.com"
+									class="w-full rounded-lg border-2 border-orange-100 bg-orange-50/50 px-4 py-2.5 text-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:border-orange-300 focus:ring-2 focus:ring-orange-100"
+								/>
+							</div>
+
+							<div>
+								<label
+									for="note"
+									class="block text-xs font-medium text-gray-700 mb-2"
+									>Notes (optional)</label
+								>
+								<textarea
+									id="note"
+									rows="3"
+									placeholder="Allergies, occasions, seating preferences..."
+									class="w-full rounded-lg border-2 border-orange-100 bg-orange-50/50 px-4 py-2.5 text-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:border-orange-300 focus:ring-2 focus:ring-orange-100"
+								></textarea>
+							</div>
+
+							<div class="flex items-center justify-between pt-2">
+								<p class="text-xs text-gray-500">
+									By booking, you agree to our reservation policy.
+								</p>
+								<button
+									type="submit"
+									class="inline-flex items-center gap-2 rounded-md gradient-button text-white hover:shadow-lg px-5 py-2.5 text-sm font-semibold tracking-tight transition-all"
+									style="letter-spacing: -0.01em"
+								>
+									Confirm booking
+									<iconify-icon
+										icon="lucide:check"
+										stroke-width="1.5"
+										class="text-base"
+									></iconify-icon>
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- LOCATION -->
+		<section id="location" class="py-12 lg:py-16 border-t border-orange-100">
+			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div class="grid lg:grid-cols-2 gap-10 items-center">
+					<div class="space-y-4">
+						<h2
+							class="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900"
+							style="
+								font-family: 'Plus Jakarta Sans', Inter, ui-sans-serif,
+									system-ui;
+								letter-spacing: -0.02em;
+							"
+						>
+							Find us
+						</h2>
+						<div class="space-y-3 text-sm">
+							<div class="flex items-start gap-3">
+								<iconify-icon
+									icon="lucide:map-pin"
+									stroke-width="1.5"
+									class="text-base mt-0.5 text-orange-500"
+								></iconify-icon>
+								<div class="text-gray-700">
+									123 Market Street<br />
+									San Francisco, CA 94103
+								</div>
+							</div>
+							<div class="flex items-center gap-3">
+								<iconify-icon
+									icon="lucide:car"
+									stroke-width="1.5"
+									class="text-base text-orange-500"
+								></iconify-icon>
+								<span class="text-gray-700">Validated parking after 5 PM</span>
+							</div>
+							<div class="flex items-center gap-3">
+								<iconify-icon
+									icon="lucide:train"
+									stroke-width="1.5"
+									class="text-base text-orange-500"
+								></iconify-icon>
+								<span class="text-gray-700"
+									>2 blocks from Civic Center Station</span
+								>
+							</div>
+						</div>
+
+						<div class="flex flex-wrap gap-3 pt-2">
+							<a
+								href="https://maps.apple.com/?q=123+Market+Street+San+Francisco"
+								target="_blank"
+								class="inline-flex items-center gap-2 rounded-lg border-2 border-orange-200 bg-white hover:bg-orange-50 px-4 py-2.5 text-sm font-semibold text-gray-700 transition-colors"
+							>
+								<iconify-icon
+									icon="lucide:map"
+									stroke-width="1.5"
+									class="text-base"
+								></iconify-icon>
+								Open in Maps
+							</a>
+							<a
+								href="tel:+1234567890"
+								class="inline-flex items-center gap-2 rounded-lg border-2 border-orange-200 bg-white hover:bg-orange-50 px-4 py-2.5 text-sm font-semibold text-gray-700 transition-colors"
+							>
+								<iconify-icon
+									icon="lucide:phone"
+									stroke-width="1.5"
+									class="text-base"
+								></iconify-icon>
+								Call us
+							</a>
+						</div>
+					</div>
+
+					<div class="rounded-2xl overflow-hidden ring-4 ring-white shadow-2xl">
+						<img
+							src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?q=80&w=2070&auto=format&fit=crop"
+							alt="Dining room interior"
+							class="h-full w-full object-cover"
+						/>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ABOUT / STORY -->
+		<section id="about" class="py-12 lg:py-16">
+			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div class="grid lg:grid-cols-3 gap-8">
+					<div class="lg:col-span-1">
+						<h2
+							class="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900"
+							style="
+								font-family: 'Plus Jakarta Sans', Inter, ui-sans-serif,
+									system-ui;
+								letter-spacing: -0.02em;
+							"
+						>
+							Our kitchen
+						</h2>
+						<p class="text-sm text-gray-600 mt-2 max-w-prose">
+							We work directly with local farms and fisheries, shifting our menu
+							with the seasons. Fire is our compass—grill, ember, smoke.
+						</p>
+					</div>
+					<div class="lg:col-span-2 grid sm:grid-cols-2 gap-6">
+						<div
+							class="rounded-xl border-2 border-orange-100 bg-white p-5 hover:shadow-lg transition-all"
+						>
+							<div class="flex items-center gap-3">
+								<div
+									class="h-12 w-12 rounded-lg gradient-button flex items-center justify-center shadow-sm"
+								>
+									<iconify-icon
+										icon="lucide:flame"
+										stroke-width="1.5"
+										class="text-xl text-white"
+									></iconify-icon>
+								</div>
+								<div>
+									<p
+										class="text-base font-bold tracking-tight text-gray-900"
+										style="letter-spacing: -0.01em"
+									>
+										Live-fire cooking
+									</p>
+									<p class="text-sm text-gray-600">
+										Char, smoke, and embers guide our flavors.
+									</p>
+								</div>
+							</div>
+						</div>
+						<div
+							class="rounded-xl border-2 border-orange-100 bg-white p-5 hover:shadow-lg transition-all"
+						>
+							<div class="flex items-center gap-3">
+								<div
+									class="h-12 w-12 rounded-lg bg-emerald-100 flex items-center justify-center"
+								>
+									<iconify-icon
+										icon="lucide:leaf"
+										stroke-width="1.5"
+										class="text-xl text-emerald-600"
+									></iconify-icon>
+								</div>
+								<div>
+									<p
+										class="text-base font-bold tracking-tight text-gray-900"
+										style="letter-spacing: -0.01em"
+									>
+										Local & seasonal
+									</p>
+									<p class="text-sm text-gray-600">
+										We source within 100 miles whenever possible.
+									</p>
+								</div>
+							</div>
+						</div>
+						<div
+							class="rounded-xl border-2 border-orange-100 bg-white p-5 hover:shadow-lg transition-all"
+						>
+							<div class="flex items-center gap-3">
+								<div
+									class="h-12 w-12 rounded-lg bg-yellow-100 flex items-center justify-center"
+								>
+									<iconify-icon
+										icon="lucide:sparkles"
+										stroke-width="1.5"
+										class="text-xl text-yellow-600"
+									></iconify-icon>
+								</div>
+								<div>
+									<p
+										class="text-base font-bold tracking-tight text-gray-900"
+										style="letter-spacing: -0.01em"
+									>
+										Chef's counter
+									</p>
+									<p class="text-sm text-gray-600">
+										Seven seats with a front-row view of the hearth.
+									</p>
+								</div>
+							</div>
+						</div>
+						<div
+							class="rounded-xl border-2 border-orange-100 bg-white p-5 hover:shadow-lg transition-all"
+						>
+							<div class="flex items-center gap-3">
+								<div
+									class="h-12 w-12 rounded-lg bg-blue-100 flex items-center justify-center"
+								>
+									<iconify-icon
+										icon="lucide:sprout"
+										stroke-width="1.5"
+										class="text-xl text-blue-600"
+									></iconify-icon>
+								</div>
+								<div>
+									<p
+										class="text-base font-bold tracking-tight text-gray-900"
+										style="letter-spacing: -0.01em"
+									>
+										Allergies welcome
+									</p>
+									<p class="text-sm text-gray-600">
+										Let us know—our team will take care of you.
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- NEWSLETTER + FOOTER -->
+		<footer class="border-t border-orange-100 bg-white">
+			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
+				<div class="grid lg:grid-cols-3 gap-8 items-start">
+					<div>
+						<a href="#" class="flex items-center group">
+							<!-- Logo Image Only -->
+							<img
+								src="images/logo-removebg-preview.png"
+								alt="Cafe Restaurant Logo"
+								class="h-12 w-auto"
+							/>
+						</a>
+						<p class="text-sm text-gray-600 mt-3 max-w-sm">
+							Modern dining rooted in California produce and live-fire
+							techniques.
+						</p>
+					</div>
+
+					<div class="lg:col-span-2 grid sm:grid-cols-2 gap-6">
+						<div
+							class="rounded-xl border-2 border-orange-100 bg-orange-50/30 p-5"
+						>
+							<p class="text-sm font-bold text-gray-900">Join our list</p>
+							<p class="text-xs text-gray-600 mt-1">
+								Get weekly menus and special event invites.
+							</p>
+							<form id="newsForm" class="mt-3 flex gap-2">
+								<div class="relative flex-1">
+									<iconify-icon
+										icon="lucide:mail"
+										stroke-width="1.5"
+										class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-orange-500 text-base"
+									></iconify-icon>
+									<input
+										type="email"
+										required
+										placeholder="you@example.com"
+										class="w-full rounded-lg border-2 border-orange-100 bg-white pl-10 pr-3 py-2.5 text-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:border-orange-300 focus:ring-2 focus:ring-orange-100"
+									/>
+								</div>
+								<button
+									class="inline-flex items-center gap-2 rounded-md gradient-button text-white hover:shadow-lg px-4 py-2.5 text-sm font-semibold tracking-tight transition-all"
+									style="letter-spacing: -0.01em"
+									type="submit"
+								>
+									Subscribe
+									<iconify-icon
+										icon="lucide:arrow-right"
+										stroke-width="1.5"
+										class="text-base"
+									></iconify-icon>
+								</button>
+							</form>
+						</div>
+
+						<div class="grid grid-cols-2 gap-6">
+							<div>
+								<p class="text-sm font-bold text-gray-900 mb-2">Visit</p>
+								<ul class="space-y-1 text-sm text-gray-600">
+									<li>
+										<a href="#location" class="hover:text-orange-600"
+											>Location</a
+										>
+									</li>
+									<li>
+										<a href="#reservations" class="hover:text-orange-600"
+											>Reservations</a
+										>
+									</li>
+									<li>
+										<a href="#menu" class="hover:text-orange-600">Menu</a>
+									</li>
+								</ul>
+							</div>
+							<div>
+								<p class="text-sm font-bold text-gray-900 mb-2">Social</p>
+								<div class="flex items-center gap-3">
+									<a
+										href="#"
+										class="inline-flex items-center justify-center h-9 w-9 rounded-lg border-2 border-orange-200 bg-white hover:bg-orange-50 text-orange-600 hover:text-orange-700"
+									>
+										<iconify-icon
+											icon="lucide:instagram"
+											stroke-width="1.5"
+											class="text-base"
+										></iconify-icon>
+									</a>
+									<a
+										href="#"
+										class="inline-flex items-center justify-center h-9 w-9 rounded-lg border-2 border-orange-200 bg-white hover:bg-orange-50 text-orange-600 hover:text-orange-700"
+									>
+										<iconify-icon
+											icon="lucide:facebook"
+											stroke-width="1.5"
+											class="text-base"
+										></iconify-icon>
+									</a>
+									<a
+										href="#"
+										class="inline-flex items-center justify-center h-9 w-9 rounded-lg border-2 border-orange-200 bg-white hover:bg-orange-50 text-orange-600 hover:text-orange-700"
+									>
+										<iconify-icon
+											icon="lucide:twitter"
+											stroke-width="1.5"
+											class="text-base"
+										></iconify-icon>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div
+					class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-orange-100 pt-6"
+				>
+					<p class="text-xs text-gray-500">
+						© <span id="year"></span> LOMA. All rights reserved.
+					</p>
+					<div class="flex items-center gap-6 text-xs text-gray-500">
+						<a href="#" class="hover:text-orange-600">Privacy</a>
+						<a href="#" class="hover:text-orange-600">Terms</a>
+						<a href="#" class="hover:text-orange-600">Accessibility</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<!-- TOAST -->
+		<div
+			id="toast"
+			class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 hidden"
+		>
+			<div
+				class="rounded-lg border-2 border-orange-200 bg-white px-4 py-3 shadow-xl flex items-center gap-3"
+			>
+				<div
+					class="h-8 w-8 rounded-md gradient-button flex items-center justify-center"
+				>
+					<iconify-icon
+						icon="lucide:check"
+						stroke-width="1.5"
+						class="text-base text-white"
+					></iconify-icon>
+				</div>
+				<p class="text-sm font-bold text-gray-900">
+					Booking confirmed. Check your email for details.
+				</p>
+			</div>
+		</div>
+
+		<!-- SCRIPTS -->
+		<script>
+			// Year
+			document.getElementById("year").textContent = new Date().getFullYear();
+
+			// Mobile menu toggle
+			const mobileBtn = document.getElementById("mobileMenuBtn");
+			const mobileMenu = document.getElementById("mobileMenu");
+			let mobileOpen = false;
+			mobileBtn?.addEventListener("click", () => {
+				mobileOpen = !mobileOpen;
+				mobileMenu.classList.toggle("hidden", !mobileOpen);
+				mobileBtn.innerHTML = mobileOpen
+					? '<iconify-icon icon="lucide:x" stroke-width="1.5" class="text-lg text-gray-700"></iconify-icon>'
+					: '<iconify-icon icon="lucide:menu" stroke-width="1.5" class="text-lg text-gray-700"></iconify-icon>';
+			});
+
+			// Menu filtering
+			const chips = Array.from(document.querySelectorAll(".menu-chip"));
+			const items = Array.from(document.querySelectorAll(".menu-item"));
+			function setActiveChip(target) {
+				chips.forEach((c) => {
+					if (c === target) {
+						c.classList.add(
+							"bg-gradient-to-r",
+							"from-orange-500",
+							"to-red-500",
+							"text-white",
+							"border-transparent"
+						);
+						c.classList.remove(
+							"bg-white",
+							"text-gray-700",
+							"border-orange-200"
+						);
+					} else {
+						c.classList.remove(
+							"bg-gradient-to-r",
+							"from-orange-500",
+							"to-red-500",
+							"text-white",
+							"border-transparent"
+						);
+						c.classList.add("bg-white", "text-gray-700", "border-orange-200");
+					}
+				});
+			}
+			chips.forEach((chip) => {
+				chip.addEventListener("click", () => {
+					const filter = chip.getAttribute("data-filter");
+					setActiveChip(chip);
+					items.forEach((card) => {
+						const cats = (card.getAttribute("data-category") || "").split(" ");
+						const show = filter === "all" ? true : cats.includes(filter);
+						card.classList.toggle("hidden", !show);
+					});
+				});
+			});
+
+			// Reservations form (demo)
+			const resForm = document.getElementById("resForm");
+			const toast = document.getElementById("toast");
+			resForm?.addEventListener("submit", (e) => {
+				e.preventDefault();
+				toast.classList.remove("hidden");
+				setTimeout(() => toast.classList.add("hidden"), 2600);
+				e.target.reset();
+			});
+
+			// Newsletter form (demo)
+			document.getElementById("newsForm")?.addEventListener("submit", (e) => {
+				e.preventDefault();
+				const btn = e.target.querySelector("button");
+				const prev = btn.innerHTML;
+				btn.innerHTML =
+					'<iconify-icon icon="lucide:check" stroke-width="1.5" class="text-base"></iconify-icon> Subscribed';
+				setTimeout(() => (btn.innerHTML = prev), 2200);
+				e.target.reset();
+			});
+		</script>
+	</body>
+</html>
